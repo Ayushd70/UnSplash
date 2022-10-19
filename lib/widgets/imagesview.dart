@@ -39,11 +39,11 @@ class _ImagesViewState extends State<ImagesView> {
 
   downloadImage() async {
     final status = await Permission.storage.request();
-    var dir = Directory("/sdcard/UnSplash");
-    if (!await dir.exists()) {
-      await dir.create(recursive: true);
-    }
+    var dir = Directory("/sdcard/Pictures/UnSplash");
     if (status.isGranted) {
+      if (!dir.existsSync()) {
+        dir.createSync();
+      }
       await FlutterDownloader.enqueue(
         url: widget.images.urls.full,
         savedDir: dir.path,
